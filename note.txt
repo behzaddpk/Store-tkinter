@@ -1,0 +1,67 @@
+def delete():
+        searched = box.get()
+        sql = "DELETE FROM manager WHERE id = %s"
+        name = (searched, )
+        result = my_cursor.execute(sql, name)
+        mydb.commit()
+        print(result)
+
+        
+    def update_manager():
+        manag_frame.destroy()
+        edit_manager = Tk()
+        edit_manager.geometry("700x500")
+        edit_manager.title("Add Manager")
+
+        logout_btn = Button(edit_manager, width=10, height=2, text="Logout", font=('Normal', 10, 'bold'), command=logout)
+        logout_btn.place(x=580, y=50)
+        Label(edit_manager, text="Update Manager Record", font=('Uchen', 20, 'bold')).place(x=170, y=50)
+        
+        searched = box.get()
+        sql = "SELECT * FROM manager WHERE id = %s"
+        name = (searched, )
+        results = my_cursor.execute(sql, name)
+        records = my_cursor.fetchall()
+
+        
+        user_name = StringVar()
+        email = StringVar()
+        address = StringVar()
+        phone_no = StringVar()
+        password = StringVar()
+        Label(edit_manager, text="User Name: ",font=('Normal', 10, 'bold') ).place(x=150, y=150)
+        Entry(edit_manager, width=25, textvariable=user_name).place(x=250, y=150)
+        Label(edit_manager, text="Email: ",font=('Normal', 10, 'bold') ).place(x=150, y=200)
+        Entry(edit_manager, width=25, textvariable=email).place(x=250, y=200)
+        Label(edit_manager, text="Address: ",font=('Normal', 10, 'bold') ).place(x=150, y=250)
+        Entry(edit_manager, width=25, textvariable=address).place(x=250, y=250)
+        Label(edit_manager, text="Phone No: ",font=('Normal', 10, 'bold') ).place(x=150, y=300)
+        Entry(edit_manager, width=25, textvariable=phone_no).place(x=250, y=300)
+        Label(edit_manager, text="Password: ",font=('Normal', 10, 'bold') ).place(x=150, y=350)
+        Entry(edit_manager, width=25, textvariable=password, show="*").place(x=250, y=350)
+
+        for record in records:
+            user_name.insert(0, manager[1])
+            email.insert(0, manager[2])
+            address.insert(0, manager[3])
+            phone_no.insert(0, manager[4])
+            password.insert(0, manager[5])
+
+
+        Button(edit_manager, text="Submit", relief="groove", width=25, font=('arial', 12, 'bold')).place(x=150, y=400)
+
+
+            
+    box = StringVar()
+    logout_btn = Button(manag_frame, width=10, height=2, text="Logout", font=('Normal', 10, 'bold'), command=logout)
+    logout_btn.place(x=580, y=50)
+    box_label = Label(manag_frame, text="Select Id")
+    box_label.place(x=450, y=150)
+    Entry(manag_frame, width=20, textvariable=box).place(x=530, y=150)
+    delete_btn = Button(manag_frame, text="Delete Manager", command=delete, width=12)
+    delete_btn.place(x=480, y=200)
+    edit_btn = Button(manag_frame, text="Edit Manager", command=update_manager,  width=12)
+    edit_btn.place(x=600, y=200)
+
+    backward_btn = Button(manag_frame, width=10, height=2, text="Back", font=('Uchen', 10, 'bold'), command= admin_frame)
+    backward_btn.place(x=580, y=440) 
